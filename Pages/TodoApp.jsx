@@ -1,5 +1,7 @@
 import React from 'react';
 
+var todos = JSON.parse(localStorage.getItem('todos')) || [];
+
 class TodoApp extends React.Component {
 	constructor(props) {
 		super(props);
@@ -14,6 +16,7 @@ class TodoApp extends React.Component {
          this.state.Todos.push(task);
          this.setState({Todos: this.state.Todos});
          this.setState({id: this.state.id + 1});
+
       }
       else {
          this.setState({error: "Please enter some text"});
@@ -90,27 +93,28 @@ class TodoApp extends React.Component {
          }
       })
       return (
-      	<div>
+      	<div className="todo-wrapper">
             <form onSubmit={evt => {
                evt.preventDefault();
                this.postNewTask(evt.target.taskName.value);
                evt.target.taskName.value = "";
               }
              }>
-              <div className="form-group">
+              <div className="todo-form form-group">
               <label htmlFor="exampleInputEmail1">Add New To-Do</label>
-              <input name="taskName" placeholder="Enter new task" onKeyDown={this.handleError.bind(this)} />
+              <input name="taskName" className="form-control" placeholder="Enter new task" onKeyDown={this.handleError.bind(this)} />
               </div>
-              <button type="submit">Add</button>
             </form>
             <p>{this.state.error}</p>
             {
                this.state.Todos.length > 0 
-               ?<div><div>
+               ?<div>
+               <div className="custom-checkbox">
                   <input type="checkbox" id="toggleAll" onChange={this.toggleAll.bind(this)} />
-                  <label htmlFor="toggleAll">Toggle All</label>
+                  <label htmlFor="toggleAll">Toggle All Task</label>
+                  <div className="checked"></div>
                </div>
-               <div>
+               <div className="todo-body">
                   <h3>Your Pending Tasks</h3> 
                   <ul>
                      
@@ -120,27 +124,36 @@ class TodoApp extends React.Component {
 
                               return(
                                  <li key={Todo.id}>
-                                    <input type="checkbox" onChange={this.handleChange.bind(this, Todo, i)} defaultChecked={Todo.completed} checked={Todo.completed} id={Todo.id} className={Todo.completed ? 'line-through' : ''}/>
-                                    <label htmlFor={Todo.id}>{Todo.work}</label>
-                                    <button onClick={this.removeTodo.bind(this, i)}>Delete</button>
+                                    <div className="custom-checkbox">
+                                       <input type="checkbox" onChange={this.handleChange.bind(this, Todo, i)} defaultChecked={Todo.completed} checked={Todo.completed} id={Todo.id} />
+                                       <label htmlFor={Todo.id} className={Todo.completed ? 'line-through' : ''}>{Todo.work}</label>
+                                       <div className="checked"></div>
+                                    </div>
+                                    <span className="icon-close" onClick={this.removeTodo.bind(this, i)}></span>
                                  </li>
                               )
                            }
                            else if(this.state.completedClick && Todo.completed){
                               return(
                                  <li key={Todo.id}>
-                                    <input type="checkbox" onChange={this.handleChange.bind(this, Todo, i)} defaultChecked={Todo.completed} checked={Todo.completed} id={Todo.id} className={Todo.completed ? 'line-through' : ''}/>
-                                    <label htmlFor={Todo.id}>{Todo.work}</label>
-                                    <button onClick={this.removeTodo.bind(this, i)}>Delete</button>
+                                    <div className="custom-checkbox">
+                                       <input type="checkbox" onChange={this.handleChange.bind(this, Todo, i)} defaultChecked={Todo.completed} checked={Todo.completed} id={Todo.id} />
+                                       <label htmlFor={Todo.id} className={Todo.completed ? 'line-through' : ''}>{Todo.work}</label>
+                                       <div className="checked"></div>
+                                    </div>
+                                    <span className="icon-close" onClick={this.removeTodo.bind(this, i)}></span>
                                  </li>
                               )
                            }
                            else if(!this.state.completedClick && !this.state.activeClick) {
                               return(
                                  <li key={Todo.id}>
-                                    <input type="checkbox" onChange={this.handleChange.bind(this, Todo, i)} defaultChecked={Todo.completed} checked={Todo.completed} id={Todo.id} className={Todo.completed ? 'line-through' : ''}/>
-                                    <label htmlFor={Todo.id}>{Todo.work}</label>
-                                    <button onClick={this.removeTodo.bind(this, i)}>Delete</button>
+                                    <div className="custom-checkbox">
+                                       <input type="checkbox" onChange={this.handleChange.bind(this, Todo, i)} defaultChecked={Todo.completed} checked={Todo.completed} id={Todo.id} />
+                                       <label htmlFor={Todo.id} className={Todo.completed ? 'line-through' : ''}>{Todo.work}</label>
+                                       <div className="checked"></div>
+                                    </div>
+                                    <span className="icon-close" onClick={this.removeTodo.bind(this, i)}></span>
                                  </li>
                               )
                            }
@@ -155,14 +168,16 @@ class TodoApp extends React.Component {
                      :<p></p>
                   }
                   
-                  <button onClick={this.allList.bind(this)}>All</button>
-                  <button onClick={this.activeList.bind(this)}>Active</button>
-                  <button onClick={this.completedList.bind(this)}>Completed</button>
-                  {
-                     (active != 0)
-                     ?<button onClick={this.removeCompleted.bind(this)}>Clear Completed</button>
-                     :''
-                  }
+                  <div className="button-group">
+                     <span onClick={this.allList.bind(this)} className={this.state.activeClick==false && this.state.completedClick==false ? 'active-btn' : ''}>All</span>
+                     <span onClick={this.activeList.bind(this)} className={this.state.activeClick==true && this.state.completedClick==false ? 'active-btn' : ''}>Active</span>
+                     <span onClick={this.completedList.bind(this)} className={this.state.activeClick==false && this.state.completedClick==true ? 'active-btn' : ''}>Completed</span>
+                     {
+                        (active != 0)
+                        ?<span onClick={this.removeCompleted.bind(this)}>Clear Completed</span>
+                        :''
+                     }
+                  </div>
                   
                </div>
                </div>

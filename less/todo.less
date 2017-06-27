@@ -1,0 +1,141 @@
+.todo-wrapper {
+	max-width: 500px;
+	margin: 50px auto;
+	padding: 20px;
+    background: #fff;
+    .box-shadow(0 0 5px rgba(0, 0, 0, .3));
+    .box-sizing(border-box);
+    .border-radius(5px);
+}
+.todo-form {
+	label {
+		display: block;
+	}
+	input {
+		display: block;
+		width: 100%;
+	}
+}
+.custom-checkbox {
+	/* Custom Checkbox */
+	/* Base for label styling */
+	margin: 20px 0;
+	position: relative;
+	label {
+		font-size: @m_font;
+		cursor: pointer;
+		padding-left: 25px;
+		.box-sizing(border-box);
+		position: relative;
+		z-index: 5;
+		display: block;
+		font-weight: 400 !important;
+		* {
+			font-size: @m_font;
+			font-weight: 400 !important;
+		}
+	}
+	.checked {
+		position: absolute;
+		top: 0;
+	}
+	[type="checkbox"]:not(:checked),
+	[type="checkbox"]:checked {
+	  position: absolute;
+	  left: -9999px;
+	}
+	
+	.checked {
+		font-family: 'icomoon' !important;
+		speak: none;
+		font-style: normal;
+		font-weight: normal;
+		font-variant: normal;
+		text-transform: none;
+		line-height: 1;
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+		font-size: @xxl_font;
+		color: #008000;
+	}
+
+	[type="checkbox"] {
+		&:not(:checked) {
+			& ~ .checked {
+				&:before {
+					content: '\e900';
+				}
+			}
+		}
+		&:checked {
+			& ~ .checked {
+				&:before {
+					content: '\e901';
+				}
+			}
+		}
+	}
+}
+
+.todo-body {
+	& > h3 {
+		border-bottom: 1px solid #ddd;
+		font-size: @xl_font;
+		padding-bottom: 10px;
+		margin-bottom: 10px;
+	}
+	ul {
+		list-style: none;
+		padding-left: 0;
+		margin: 0 0 20px;
+		li {
+			list-style: none;
+			position: relative;
+			padding: 20px 0;
+			.box-sizing(border-box);
+			border-bottom: 1px solid #ddd;
+			.custom-checkbox {
+				margin: 0;
+			}
+			label {
+				margin-bottom: 0;
+			}
+			.line-through {
+				text-decoration: line-through;
+				color: #ddd;
+			}
+			span {
+				position: absolute;
+				top: 20px;
+				right: 0;
+				font-size: @xxl_font;
+				cursor: pointer;
+				color: #f93c30;
+				opacity: 0;
+				.transition(opacity .2s linear);
+				z-index: 9999;
+			}
+			&:hover {
+				span {
+					opacity: 1;
+				}
+			}
+		}
+	}
+}
+.button-group {
+	span {
+		padding: 10px;
+		.border-radius(5px);
+		.box-sizing(border-box);
+		display: inline-block;
+		margin-right: 10px;
+		line-height: 1;
+		border: 1px solid #ddd;
+		cursor: pointer;
+		.transition(background .2s linear);
+		&:hover, &.active-btn {
+			background-color: #ddd;
+		}
+	}
+}

@@ -3,3 +3,20 @@
     -moz-border-radius: @radius;
     border-radius: @radius;
 }
+.box-sizing(@box) {
+    -webkit-box-sizing: @box;
+       -moz-box-sizing: @box;
+            box-sizing: @box;
+}
+.box-shadow(@box) {
+    -webkit-box-shadow: @box;
+       -moz-box-shadow: @box;
+            box-shadow: @box;
+}
+.transition(@value) {
+	-webkit-transition: @value;
+	   -moz-transition: @value;
+		-ms-transition: @value;
+		 -o-transition: @value;
+			transition: @value;
+}
